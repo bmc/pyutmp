@@ -100,7 +100,7 @@ class UtmpFile(UtmpFileBase):
         if entry:
             u = Utmp()
             u.ut_type = _TYPE_MAP[entry.ut_type]
-            u.ut_user_process = (utmp.ut_type == 'USER_PROCESS')
+            u.ut_user_process = (u.ut_type == 'USER_PROCESS')
             u.ut_line = entry.ut_line
             u.ut_pid = entry.ut_pid
             u.ut_id = entry.ut_id
