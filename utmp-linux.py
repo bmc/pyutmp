@@ -88,6 +88,7 @@ def utgetents():
         utmp = Utmp()
         utmp.ut_type = _TYPE_MAP[entry.ut_type]
         utmp.ut_user_process = (utmp.ut_type == 'USER_PROCESS')
+        utmp.ut_line = entry.ut_line
         utmp.ut_pid = entry.ut_pid
         utmp.ut_id = entry.ut_id
         utmp.ut_user = entry.ut_user
