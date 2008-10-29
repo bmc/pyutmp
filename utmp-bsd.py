@@ -66,6 +66,7 @@ def utgetents():
             utmp = Utmp()
             utmp.ut_user_process = len(entry.ut_name) > 0
             utmp.ut_user = entry.ut_name
+            utmp.ut_line = entry.ut_line
             if len(entry.ut_host) > 0:
                 utmp.ut_host = entry.ut_host
             else:
