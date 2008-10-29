@@ -1,4 +1,4 @@
-PLATFORM = mac
+#PLATFORM = mac
 #PLATFORM = linux
 #PLATFORM = bsd
 
@@ -17,7 +17,7 @@ ifeq "$(PLATFORM)" "linux"
 UTMP_SO = utmp.so
 PYTHON_HOME = /usr
 CC_SO     = gcc -fPIC
-LD_SO
+LD_SO     = gcc -shared
 INCLUDES  = -I/usr/include/python2.5
 LDFLAGS   = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
 endif
