@@ -6,6 +6,10 @@ cdef extern from "time.h":
 cdef extern from "string.h":
     char *strncpy(char *dest, char *src, int n)
 
+cdef extern from "sys/types.h":
+    ctypedef int size_t
+    ctypedef int time_t
+
 cdef extern from "utmp.h":
     struct exit_status:
         short e_termination
@@ -24,12 +28,7 @@ cdef extern from "utmp.h":
         char ut_line[UT_LINESIZE]
         char ut_name[UT_NAMESIZE]
         char ut_host[UT_HOSTSIZE]
-        long ut_time
-
-    void setutent()
-    void endutent()
-    utmp *getutent()
-    utmp *getutline(utmp *u)
+        time_t ut_time
 
 cdef extern from "fcntl.h":
     int open(char *file, int flags, int mode)
