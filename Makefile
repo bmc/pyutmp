@@ -63,7 +63,7 @@ CC        = gcc
 all: $(PYUTMP_SO) pyutmp.py
 
 clean:
-	rm -f $(PYUTMP_C) $(PYUTMP_SO) $(PYUTMP_O) pyutmp.py pyutmp.pyc
+	rm -f $(PYUTMP_SO) $(PYUTMP_O) pyutmp.py pyutmp.pyc
 
 pyutmp.py:
 	echo "import $(MODULE)" >pyutmp.py
