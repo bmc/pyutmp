@@ -66,7 +66,7 @@ class UtmpFile(UtmpFileBase):
     def rewind(self):
         lseek(self._fd, 0, SEEK_SET)
 
-    def get_next_entry(self):
+    def _get_next_entry(self):
         cdef utmp entry
         cdef int bytes
 

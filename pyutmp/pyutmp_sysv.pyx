@@ -1,5 +1,5 @@
 #                                                               -*-python-*-
-# Cython input file for pyutmp_linux module.
+# Cython input file for pyutmp_sysv module.
 #
 # $Id$
 # ---------------------------------------------------------------------------
@@ -95,7 +95,7 @@ class UtmpFile(UtmpFileBase):
     def rewind(self):
         setutent()
 
-    def get_next_entry(self):
+    def _get_next_entry(self):
         cdef utmp *entry = getutent()
         if entry:
             u = Utmp()

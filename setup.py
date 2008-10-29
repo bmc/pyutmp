@@ -6,12 +6,9 @@
 # ---------------------------------------------------------------------------
 
 from distutils.core import setup, Extension
-import re
 import os
 import sys
 import imp
-import string
-import time
 
 DESCRIPTION = 'Python UTMP wrapper for Un*x systems'
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -27,16 +24,14 @@ def die(msg):
     print >> sys.stderr, msg
     sys.exit(1)
 
-# Figure out what platform we're using.
+# Get some info
 
-if sys.platform.startswith('linux'):
-    platform = 'linux'
-elif sys.platform.startswith('darwin'):
-    platform = 'bsd'
-elif sys.platform.find('bsd') >= 0:
-    platform = 'bsd'
-else:
-    die('Unknown or unsupported platform: "%s"' % sys.platform)
+mf = os.path.join(HERE, 'pyutmp', '__init__.py')
+os.environ['_IN_SETUP_PY'] = 'True'
+m = imp.load_module('pyutmp', open(mf), mf,
+                    ('__init__.py', 'r', imp.PY_SOURCE))
+platform = m._get_platform()
+long_description = m.__doc__
 
 # Determine whether the C file is there. If not, build it. If it's older than
 # the pyx file, build it.
@@ -64,23 +59,13 @@ if build_c_file:
         die('Failed to build "%s" from "%s"' % (c_file, pyx_file))
 os.chdir(HERE)
 
-# Build the platform-specific file
-
-template = ''.join(open(os.path.join(PACKAGE, 'pyutmp_platform.pyt')).readlines())
-s = string.Template(template).substitute(
-    {'datetime'   : time.asctime(time.localtime()),
-     'ext_module' : ext_module,
-     'package'    : PACKAGE}
-)
-open(os.path.join(PACKAGE, 'pyutmp_platform.py'), 'w').write(s)
-
 # Run setup
 
 setup(
     name='pyutmp',
     packages = [PACKAGE],
     version='0.1',
-    description=DESCRIPTION,
+    description=long_description,
     long_description=DESCRIPTION,
     url='http://www.clapper.org/software/python/pyutmp/',
     license='BSD license',
