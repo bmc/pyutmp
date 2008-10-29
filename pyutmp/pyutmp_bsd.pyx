@@ -1,5 +1,5 @@
 #                                                               -*-python-*-
-# Cython input file for pyutmp_linux module.
+# Cython input file for pyutmp_bsd module.
 #
 # $Id$
 # ---------------------------------------------------------------------------

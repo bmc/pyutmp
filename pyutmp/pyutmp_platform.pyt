@@ -5,4 +5,4 @@
 ``pyutmp`` is a 
 """
 
-from ${ext_module} import Utmp, UtmpFile
+from ${package}.${ext_module} import Utmp, UtmpFile

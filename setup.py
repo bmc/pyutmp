@@ -69,7 +69,8 @@ os.chdir(HERE)
 template = ''.join(open(os.path.join(PACKAGE, 'pyutmp_platform.pyt')).readlines())
 s = string.Template(template).substitute(
     {'datetime'   : time.asctime(time.localtime()),
-     'ext_module' : ext_module}
+     'ext_module' : ext_module,
+     'package'    : PACKAGE}
 )
 open(os.path.join(PACKAGE, 'pyutmp_platform.py'), 'w').write(s)
 
