@@ -1,10 +1,13 @@
+#                                                               -*-python-*-
+# Cython input file for pyutmp_linux module.
+#
+# $Id$
+# ---------------------------------------------------------------------------
+
 cdef extern from "time.h":
     struct timeval:
         long tv_sec
         long tv_usec
-
-cdef extern from "string.h":
-    char *strncpy(char *dest, char *src, int n)
 
 cdef extern from "utmp.h":
     struct exit_status:
@@ -80,23 +83,33 @@ class Utmp(object):
     ut_addr = None
     ut_user_process = False
 
-def utgetents():
-    setutent()
-    cdef utmp *entry = getutent()
-    results = []
-    while entry:
-        utmp = Utmp()
-        utmp.ut_type = _TYPE_MAP[entry.ut_type]
-        utmp.ut_user_process = (utmp.ut_type == 'USER_PROCESS')
-        utmp.ut_line = entry.ut_line
-        utmp.ut_pid = entry.ut_pid
-        utmp.ut_id = entry.ut_id
-        utmp.ut_user = entry.ut_user
-        utmp.ut_host = entry.ut_host
-        utmp.ut_exit_code = entry.ut_exit.e_exit
-        utmp.ut_time = float(entry.ut_tv.tv_sec)
-        utmp.ut_addr = entry.ut_addr_v6[0]
+from pyutmp import UtmpFileBase
+class UtmpFile(UtmpFileBase):
 
-        results.append(utmp)
-        entry = getutent()
-    return results
+    def __init__(self):
+        setutent()
+
+    def __del__(self):
+        endutent()
+
+    def rewind(self):
+        setutent()
+
+    def get_next_entry(self):
+        cdef utmp *entry = getutent()
+        if entry:
+            u = Utmp()
+            u.ut_type = _TYPE_MAP[entry.ut_type]
+            u.ut_user_process = (utmp.ut_type == 'USER_PROCESS')
+            u.ut_line = entry.ut_line
+            u.ut_pid = entry.ut_pid
+            u.ut_id = entry.ut_id
+            u.ut_user = entry.ut_user
+            u.ut_host = entry.ut_host
+            u.ut_exit_code = entry.ut_exit.e_exit
+            u.ut_time = float(entry.ut_tv.tv_sec)
+            u.ut_addr = entry.ut_addr_v6[0]
+        else:
+            u = None
+
+        return u

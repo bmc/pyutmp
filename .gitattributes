@@ -1,4 +1,6 @@
 *.py	ident
+*.pyx	ident
+*.pyt	ident
 *.txt	ident
 README	ident
 CHANGELOG	ident

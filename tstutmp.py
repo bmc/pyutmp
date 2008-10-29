@@ -10,6 +10,7 @@ def tty():
         raise Exception, 'tty(1) failed'
     return p.stdout.readlines()[0].strip()
 
-for u in pyutmp.utgetents():
+f = UtmpFile()
+for u in f:
     if u.ut_user_process:
         print '%s %s (%s) from %s' % (time.ctime(u.ut_time), u.ut_user, u.ut_line, u.ut_host)
