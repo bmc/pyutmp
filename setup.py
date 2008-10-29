@@ -13,7 +13,7 @@ import imp
 import string
 import time
 
-DESCRIPTION = 'Python UTMP wrapper for Un*x systems',
+DESCRIPTION = 'Python UTMP wrapper for Un*x systems'
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACKAGE = 'pyutmp'
 
@@ -85,8 +85,8 @@ setup(
     license='BSD license',
     author='Brian M. Clapper',
     author_email='bmc@clapper.org',
-    py_modules=['pyutmp',],
-    ext_modules=[Extension(ext_package, [os.path.join(PACKAGE, c_file)]),],
+    py_modules=['pyutmp'],
+    ext_modules=[Extension(ext_package, [os.path.join(PACKAGE, c_file)])],
     classifiers = [
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
