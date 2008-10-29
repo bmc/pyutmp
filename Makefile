@@ -15,33 +15,42 @@
 #PLATFORM = bsd
 
 ifeq "$(PLATFORM)" "mac"
-UTMP_SO   = pyutmp.so
-UTMP_PY   = utmp-bsd.py
+MODULE      = pyutmp_bsd
+PYUTMP_SO   = pyutmp_bsd.so
+PYUTMP_CPY  = pyutmp_bsd.pyx
+PYUTMP_O    = pyutmp_bsd.o
+PYUTMP_C    = pyutmp_bsd.c
 PYTHON_HOME = /Library/Frameworks/Python.framework/Versions/2.5
-LD_SO     = gcc -bundle -flat_namespace -undefined suppress
-CC_SO     = gcc -fno-common
-LDFLAGS   = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
-INCLUDES  = -I$(PYTHON_HOME)/include/python2.5
+LD_SO       = gcc -bundle -flat_namespace -undefined suppress
+CC_SO       = gcc -fno-common
+LDFLAGS     = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
+INCLUDES    = -I$(PYTHON_HOME)/include/python2.5
 else
 
 ifeq "$(PLATFORM)" "linux"
-UTMP_SO   = pyutmp.so
-UTMP_PY   = utmp-linux.py
+MODULE      = pyutmp_linux
+PYUTMP_SO   = pyutmp_linux.so
+PYUTMP_CPY  = pyutmp_linux.pyx
+PYUTMP_O    = pyutmp_linux.o
+PYUTMP_C    = pyutmp_linux.c
 PYTHON_HOME = /usr
-CC_SO     = gcc -fPIC
-LD_SO     = gcc -shared
-INCLUDES  = -I/usr/include/python2.5
-LDFLAGS   = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
+CC_SO       = gcc -fPIC
+LD_SO       = gcc -shared
+INCLUDES    = -I/usr/include/python2.5
+LDFLAGS     = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
 
 else
 ifeq "$(PLATFORM)" "bsd"
 PYTHON_HOME = /usr/local
-UTMP_SO   = pyutmp.so
-UTMP_PY   = utmp-bsd.py
-CC_SO     = gcc -fPIC
-LD_SO     = gcc -shared
-LDFLAGS   = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
-INCLUDES  = -I$(PYTHON_HOME)/include/python2.5
+MODULE      = pyutmp_bsd
+PYUTMP_SO   = pyutmp_bsd.so
+PYUTMP_CPY  = pyutmp_bsd.pyx
+PYUTMP_O    = pyutmp_bsd.o
+PYUTMP_C    = pyutmp_bsd.c
+CC_SO       = gcc -fPIC
+LD_SO       = gcc -shared
+LDFLAGS     = -L$(PYTHON_HOME)/lib/python2.5/config -lpython2.5
+INCLUDES    = -I$(PYTHON_HOME)/include/python2.5
 endif
 endif
 endif
@@ -51,18 +60,18 @@ CC        = gcc
 
 .PHONY: all clean
 
-all: $(UTMP_SO)
+all: $(PYUTMP_SO) pyutmp.py
 
 clean:
-	rm -f pyutmp.c $(UTMP_SO) pyutmp.o
+	rm -f $(PYUTMP_C) $(PYUTMP_SO) $(PYUTMP_O) pyutmp.py pyutmp.pyc
 
-pyutmp.c: $(UTMP_PY)
-	@rm -f pyutmp.py
-	ln -s $(UTMP_PY) pyutmp.py
-	$(CYTHON) pyutmp.py
-	rm -f pyutmp.py
-pyutmp.o: pyutmp.c
-	$(CC_SO) $(INCLUDES) -o pyutmp.o -c pyutmp.c
-$(UTMP_SO): pyutmp.o
-	$(LD_SO) -o $(UTMP_SO) pyutmp.o $(LDFLAGS)
+pyutmp.py:
+	echo "import $(MODULE)" >pyutmp.py
+	echo "utgetents = $(MODULE).utgetents" >>pyutmp.py
+$(PYUTMP_C): $(PYUTMP_CPY)
+	$(CYTHON) $(PYUTMP_CPY)
+$(PYUTMP_O): $(PYUTMP_C)
+	$(CC_SO) $(INCLUDES) -o $(PYUTMP_O) -c $(PYUTMP_C)
+$(PYUTMP_SO): $(PYUTMP_O)
+	$(LD_SO) -o $(PYUTMP_SO) $(PYUTMP_O) $(LDFLAGS)
 

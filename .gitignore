@@ -1,0 +1,5 @@
+# Ignore files that match these wildcards
+
+*.pyc
+*.so
+*.o
