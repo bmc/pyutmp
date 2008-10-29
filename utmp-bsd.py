@@ -59,7 +59,6 @@ def utgetents():
 
     try:
         bytes = read(f_utmp, &entry, sizeof(entry))
-        print bytes
         results = []
         while bytes > 0:
             entry.ut_host[UT_HOSTSIZE - 1] = '\0'
