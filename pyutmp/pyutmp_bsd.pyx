@@ -78,15 +78,24 @@ class _UtmpFile(object):
             entry.ut_name[UT_NAMESIZE - 1] = '\0'
             u = Utmp()
             u.ut_user_process = len(entry.ut_name) > 0
-            u.ut_user = entry.ut_name
-            u.ut_line = entry.ut_line
-            if u.ut_line[0] != '/':
-                u.ut_line = '/dev/' + u.ut_line
+            u.ut_time = entry.ut_time
+
+            if len(entry.ut_name) > 0:
+                u.ut_user = entry.ut_name
+            else:
+                u.ut_user = None
+
+            if len(entry.ut_line) == 0:
+                u.ut_line = None
+            else:
+                u.ut_line = entry.ut_line
+                if not u.ut_line.startswith('/'):
+                    u.ut_line = '/dev/' + u.ut_line
+
             if len(entry.ut_host) > 0:
                 u.ut_host = entry.ut_host
             else:
                 u.ut_host = None
-            u.ut_time = entry.ut_time
 
         else:
             u = None

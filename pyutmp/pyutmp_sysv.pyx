@@ -95,16 +95,30 @@ class _UtmpFile(object):
             u = Utmp()
             u.ut_type = _TYPE_MAP[entry.ut_type]
             u.ut_user_process = (u.ut_type == 'USER_PROCESS')
-            u.ut_line = entry.ut_line
-            if u.ut_line[0] != '/':
-                u.ut_line = '/dev/' + u.ut_line
             u.ut_pid = entry.ut_pid
             u.ut_id = entry.ut_id
             u.ut_user = entry.ut_user
-            u.ut_host = entry.ut_host
             u.ut_exit_code = entry.ut_exit.e_exit
             u.ut_time = float(entry.ut_tv.tv_sec)
             u.ut_addr = entry.ut_addr_v6[0]
+
+            if len(entry.ut_user) > 0:
+                u.ut_user = entry.ut_user
+            else:
+                u.ut_user = None
+
+            if len(entry.ut_line) == 0:
+                u.ut_line = None
+            else:
+                u.ut_line = entry.ut_line
+                if not u.ut_line.startswith('/'):
+                    u.ut_line = '/dev/' + u.ut_line
+
+            if len(entry.ut_host) > 0:
+                u.ut_host = entry.ut_host
+            else:
+                u.ut_host = None
+
         else:
             u = None
             endutent()
