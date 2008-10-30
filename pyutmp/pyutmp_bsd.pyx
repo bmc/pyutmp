@@ -54,11 +54,12 @@ class Utmp(object):
     ut_time = None
     ut_user_process = False
 
-from pyutmp import UtmpFileBase
-class UtmpFile(UtmpFileBase):
+class _UtmpFile(object):
 
-    def __init__(self):
-        self._fd = open(_PATH_UTMP, O_RDONLY, 0)
+    def __init__(self, path=None):
+        if not path:
+            path = _PATH_UTMP
+        self._fd = open(path, O_RDONLY, 0)
 
     def __del__(self):
         close(self._fd)
@@ -79,10 +80,12 @@ class UtmpFile(UtmpFileBase):
             u.ut_user_process = len(entry.ut_name) > 0
             u.ut_user = entry.ut_name
             u.ut_line = entry.ut_line
+            if u.ut_line[0] != '/':
+                u.ut_line = '/dev/' + u.ut_line
             if len(entry.ut_host) > 0:
                 u.ut_host = entry.ut_host
             else:
-                u.ut_host = 'localhost'
+                u.ut_host = None
             u.ut_time = entry.ut_time
 
         else:

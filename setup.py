@@ -27,7 +27,7 @@ def die(msg):
 # Get some info
 
 mf = os.path.join(HERE, 'pyutmp', '__init__.py')
-os.environ['_IN_SETUP_PY'] = 'True'
+os.environ['__IN_SETUP_PY'] = 'True'
 m = imp.load_module('pyutmp', open(mf), mf,
                     ('__init__.py', 'r', imp.PY_SOURCE))
 platform = m._get_platform()

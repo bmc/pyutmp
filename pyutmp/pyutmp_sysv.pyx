@@ -47,18 +47,7 @@ cdef extern from "utmp.h":
     void endutent()
     utmp *getutent()
     utmp *getutline(utmp *u)
-
-from enum import Enum
-
-UT_TYPE = Enum('RUN_LVL',
-               'BOOT_TIME',
-               'NEW_TIME',
-               'OLD_TIME',
-               'INIT_PROCESS',
-               'LOGIN_PROCESS',
-               'USER_PROCESS',
-               'DEAD_PROCESS',
-               'ACCOUNTING')
+    void utmpname(char *path)
 
 _TYPE_MAP = {RUN_LVL: 'RUN_LVL',
              BOOT_TIME: 'BOOT_TIME',
@@ -83,25 +72,32 @@ class Utmp(object):
     ut_addr = None
     ut_user_process = False
 
-from pyutmp import UtmpFileBase
-class UtmpFile(UtmpFileBase):
-
-    def __init__(self):
-        setutent()
+class _UtmpFile(object):
+    def __init__(self, path=None):
+        self._is_open = False
+        if path:
+            utmpname(path)
 
     def __del__(self):
-        endutent()
+        if self._is_open:
+            endutent()
 
     def rewind(self):
         setutent()
 
     def _get_next_entry(self):
+        if not self._is_open:
+            setutent()
+            self._is_open = True
+
         cdef utmp *entry = getutent()
         if entry:
             u = Utmp()
             u.ut_type = _TYPE_MAP[entry.ut_type]
             u.ut_user_process = (u.ut_type == 'USER_PROCESS')
             u.ut_line = entry.ut_line
+            if u.ut_line[0] != '/':
+                u.ut_line = '/dev/' + u.ut_line
             u.ut_pid = entry.ut_pid
             u.ut_id = entry.ut_id
             u.ut_user = entry.ut_user
@@ -111,5 +107,6 @@ class UtmpFile(UtmpFileBase):
             u.ut_addr = entry.ut_addr_v6[0]
         else:
             u = None
+            endutent()
 
         return u
