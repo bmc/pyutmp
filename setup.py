@@ -65,7 +65,7 @@ setup(
     name='pyutmp',
     packages = [PACKAGE],
     version='0.1',
-    description=long_description,
+    description=DESCRIPTION,
     long_description=DESCRIPTION,
     url='http://www.clapper.org/software/python/pyutmp/',
     license='BSD license',
