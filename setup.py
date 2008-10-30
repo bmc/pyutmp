@@ -5,16 +5,28 @@
 # $Id$
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Imports
+# ---------------------------------------------------------------------------
+
 from distutils.core import setup, Extension
 import os
 import sys
 import imp
+
+# ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
 
 DESCRIPTION = 'Python UTMP wrapper for Un*x systems'
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACKAGE = 'pyutmp'
 
 sys.path = [HERE] + sys.path
+
+# ---------------------------------------------------------------------------
+# Functions 
+# ---------------------------------------------------------------------------
 
 def run_command(cmd):
     print '+ %s' % cmd
@@ -24,7 +36,11 @@ def die(msg):
     print >> sys.stderr, msg
     sys.exit(1)
 
-# Get some info
+# ---------------------------------------------------------------------------
+# Initialization
+# ---------------------------------------------------------------------------
+
+# Get some info from the module itself.
 
 mf = os.path.join(HERE, 'pyutmp', '__init__.py')
 os.environ['__IN_SETUP_PY'] = 'True'
@@ -32,6 +48,23 @@ m = imp.load_module('pyutmp', open(mf), mf,
                     ('__init__.py', 'r', imp.PY_SOURCE))
 platform = m._get_platform()
 long_description = m.__doc__
+
+# Scrub the long description, for PyPI. It uses normal reStructuredText;
+# we have to remove some epydoc-isms.
+
+lines = long_description.split('\n')
+lines2 = []
+for line in lines:
+    if line.startswith('.. python::'):
+        lines2.append('::')
+        continue
+
+    line = line.replace('``', '%%--%%').replace('`', '').replace('%%--%%', '``')
+    lines2.append(line)
+
+long_description = '\n'.join(lines2)
+del lines
+del lines2
 
 # Determine whether the C file is there. If not, build it. If it's older than
 # the pyx file, build it.
@@ -59,14 +92,16 @@ if build_c_file:
         die('Failed to build "%s" from "%s"' % (c_file, pyx_file))
 os.chdir(HERE)
 
-# Run setup
+# ---------------------------------------------------------------------------
+# Setup
+# ---------------------------------------------------------------------------
 
 setup(
     name='pyutmp',
     packages = [PACKAGE],
     version='0.1',
     description=DESCRIPTION,
-    long_description=DESCRIPTION,
+    long_description=long_description,
     url='http://www.clapper.org/software/python/pyutmp/',
     license='BSD license',
     author='Brian M. Clapper',

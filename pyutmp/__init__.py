@@ -48,60 +48,60 @@ Utmp
 The fields of the `Utmp` class are operating system-dependent. However, they
 will *always* include at least the following fields:
 
-+---------------------+-----------+-----------------------------------------+
-| Field               | Type      | Description                             |
-+=====================+===========+=========================================+
-| ``ut_user``         | ``str``   | The user associated with the *utmp*     |
-|                     |           | entry, if any.                          |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_line``         | ``str``   | The tty or pseudo-tty associated with   |
-|                     |           | the entry, if any. In this API, the     |
-|                     |           | line will *always* be the full path to  |
-|                     |           | the device.                             |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_host``         | ``str``   | The host name associated with the       |
-|                     |           | entry, if any.                          |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_time``         | timestamp | The timestamp associated with the       |
-|                     |           | entry. This timestamp is in the form    |
-|                     |           | returned by ``time.time()`` and may be  |
-|                     |           | passed directly to methods like         |
-|                     |           | ``time.ctime()``.                       |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_user_process`` | ``bool``  | Whether or not the *utmp* entry is a    |
-|                     |           | user process (as opposed to a reboot or |
-|                     |           | some other system event).               |
-+---------------------+-----------+-----------------------------------------+
-
++---------------------+-----------+----------------------------------------+
+| Field               | Type      | Description                            |
++=====================+===========+========================================+
+| ``ut_user``         | ``str``   | The user associated with the *utmp*    |
+|                     |           | entry, if any.                         |
++---------------------+-----------+----------------------------------------+
+| ``ut_line``         | ``str``   | The tty or pseudo-tty associated with  |
+|                     |           | the entry, if any. In this API, the    |
+|                     |           | line will *always* be the full path to |
+|                     |           | the device.                            |
++---------------------+-----------+----------------------------------------+
+| ``ut_host``         | ``str``   | The host name associated with the      |
+|                     |           | entry, if any.                         |
++---------------------+-----------+----------------------------------------+
+| ``ut_time``         | timestamp | The timestamp associated with the      |
+|                     |           | entry. This timestamp is in the form   |
+|                     |           | returned by ``time.time()`` and may be |
+|                     |           | passed directly to methods like        |
+|                     |           | ``time.ctime()``.                      |
++---------------------+-----------+----------------------------------------+
+| ``ut_user_process`` | ``bool``  | Whether or not the *utmp* entry is a   |
+|                     |           | user process (as opposed to a reboot or|
+|                     |           | some other system event).              |
++---------------------+-----------+----------------------------------------+
+    
 On some operating systems, other fields may be present. For instance, on
 Linux and Solaris systems (and other System V-derived systems), `Utmp` also
 contains the following fields:
 
-+---------------------+-----------+-----------------------------------------+
-| Optional Field      | Type      | Description                             |
-+=====================+===========+=========================================+
-| ``ut_type``         | ``str``   | The type of the entry, typically one of |
-|                     |           | the following string values:            |
-|                     |           | "RUN_LVL", "BOOT_TIME", "NEW_TIME",     |
-|                     |           | "OLD_TIME", "INIT_PROCESS",             |
-|                     |           | "LOGIN_PROCESS", "USER_PROCESS",        |
-|                     |           | "DEAD_PROCESS", "ACCOUNTING".           |
-|                     |           | See the *utmp*\ (5) manual page for a   |
-|                     |           | description of these values             |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_pid``          | ``int``   | Associated process ID, if any.          |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_id``           | ``str``   | The *init*\ (8) ID, or the abbreviated  |
-|                     |           | tty name.                               |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_exit_code``    | ``int``   | Process exit code, if applicable.       |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_session``      | ``int``   | Session ID, for windowing.              |
-+---------------------+-----------+-----------------------------------------+
-| ``ut_addr``         | ``int``   | IPv4 address of remote host (if         |
-|                     | array     | applicable), one octet per array        |
-|                     |           | element.                                |
-+---------------------+-----------+-----------------------------------------+
++---------------------+-----------+----------------------------------------+
+| Optional Field      | Type      | Description                            |
++=====================+===========+========================================+
+| ``ut_type``         | ``str``   | The type of the entry, typically one of|
+|                     |           | the following string values:           |
+|                     |           | "RUN_LVL", "BOOT_TIME", "NEW_TIME",    |
+|                     |           | "OLD_TIME", "INIT_PROCESS",            |
+|                     |           | "LOGIN_PROCESS", "USER_PROCESS",       |
+|                     |           | "DEAD_PROCESS", "ACCOUNTING".          |
+|                     |           | See the *utmp*\ (5) manual page for a  |
+|                     |           | description of these values            |
++---------------------+-----------+----------------------------------------+
+| ``ut_pid``          | ``int``   | Associated process ID, if any.         |
++---------------------+-----------+----------------------------------------+
+| ``ut_id``           | ``str``   | The *init*\ (8) ID, or the abbreviated |
+|                     |           | tty name.                              |
++---------------------+-----------+----------------------------------------+
+| ``ut_exit_code``    | ``int``   | Process exit code, if applicable.      |
++---------------------+-----------+----------------------------------------+
+| ``ut_session``      | ``int``   | Session ID, for windowing.             |
++---------------------+-----------+----------------------------------------+
+| ``ut_addr``         | ``int``   | IPv4 address of remote host (if        |
+|                     | array     | applicable), one octet per array       |
+|                     |           | element.                               |
++---------------------+-----------+----------------------------------------+
 
 If you're writing portable code, you should not count on the presence of
 those attributes--or, at the very least, you should wrap access to them in
@@ -126,7 +126,42 @@ Restrictions
 - Access to the *utmp* file is read-only. There is no provision for writing
   to the file.
 
+Copyright and License
+=====================
+
+Copyright (c) 2008 Brian M. Clapper
+
+This is free software, released under the following BSD-like license:
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+ - Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+ - The end-user documentation included with the redistribution, if any,
+   must include the following acknowlegement:
+
+   This product includes software developed by Brian M. Clapper
+   (bmc@clapper.org, http://www.clapper.org/bmc/). That software is
+   copyright (c) 2008 Brian M. Clapper.
+
+   Alternately, this acknowlegement may appear in the software itself, if
+   and wherever such third-party acknowlegements normally appear.
+
+THIS SOFTWARE IS PROVIDED B{AS IS} AND ANY EXPRESSED OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL BRIAN M. CLAPPER BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
+
+__docformat__ = 'restructuredtext'
 
 # ---------------------------------------------------------------------------
 # Imports
