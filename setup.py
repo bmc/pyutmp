@@ -99,7 +99,7 @@ os.chdir(HERE)
 setup(
     name='pyutmp',
     packages = [PACKAGE],
-    version='0.1',
+    version='0.2',
     description=DESCRIPTION,
     long_description=long_description,
     url='http://www.clapper.org/software/python/pyutmp/',
@@ -107,7 +107,8 @@ setup(
     author='Brian M. Clapper',
     author_email='bmc@clapper.org',
     py_modules=['pyutmp'],
-    ext_modules=[Extension(ext_package, [os.path.join(PACKAGE, c_file)])],
+    ext_modules=[Extension(ext_package,
+                           [os.path.join(PACKAGE, c_file)],)],
     classifiers = [
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',

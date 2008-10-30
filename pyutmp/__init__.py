@@ -211,10 +211,12 @@ class Utmp(object):
 # ---------------------------------------------------------------------------
 
 def _get_platform():
-    if sys.platform.startswith('linux') or \
-       sys.platform.startswith('solaris'):
-        platform = 'sysv'
-    
+    if sys.platform.startswith('linux'):
+        platform = 'linux'
+
+    elif sys.platform.startswith('sunos'):
+        platform = 'solaris'
+
     elif sys.platform.startswith('darwin') or \
          (sys.platform.find('bsd') >= 0):
         platform = 'bsd'

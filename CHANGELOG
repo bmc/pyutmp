@@ -1,6 +1,12 @@
 $Id$
 ---------------------------------------------------------------------------
 
+Version 0.2 (30 October, 2008)
+
+- Ported to OpenSolaris: version 2008.05, x86 platform, using the SunStudio
+  compiler suite (version 12).
+
+---------------------------------------------------------------------------
 Version 0.1 (29 October, 2008)
 
 - Initial version posted to the web.

@@ -60,7 +60,7 @@ _TYPE_MAP = {RUN_LVL: 'RUN_LVL',
              ACCOUNTING: 'ACCOUNTING'}
 
 class Utmp(object):
-    ut_type = UT_UNKNOWN
+    ut_type = 'UT_UNKNOWN'
     ut_pid = None
     ut_line = None
     ut_id = None
