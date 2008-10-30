@@ -116,8 +116,8 @@ This module has been tested on the following operating systems:
 - Ubuntu Linux, version 8.04
 - FreeBSD
 - Mac OS X 10.4 (Tiger)
+- OpenSolaris (2008.05, x86, using the SunStudio 12 compiler suite)
 
-It should also work on Solaris, though it has not been tested there.
 Adding support for other Unix variants should be straightforward.
 
 Restrictions
