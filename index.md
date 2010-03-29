@@ -3,7 +3,6 @@ title: pyutmp — Python interface to Unix utmp
 layout: withTOC
 ---
 
-
 ## Introduction
 
 The `pyutmp` module provides a Python-oriented interface to the *utmp* file
