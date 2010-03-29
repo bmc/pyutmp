@@ -1,6 +1,11 @@
 $Id$
 ---------------------------------------------------------------------------
 
+Version 0.2.1 (28 March, 2010)
+
+- Changed URL to new GitHub home page.
+
+---------------------------------------------------------------------------
 Version 0.2 (30 October, 2008)
 
 - Ported to OpenSolaris: version 2008.05, x86 platform, using the SunStudio

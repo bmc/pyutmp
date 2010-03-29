@@ -99,10 +99,10 @@ os.chdir(HERE)
 setup(
     name='pyutmp',
     packages = [PACKAGE],
-    version='0.2',
+    version='0.2.1',
     description=DESCRIPTION,
     long_description=long_description,
-    url='http://www.clapper.org/software/python/pyutmp/',
+    url='http://bmc.github.com/pyutmp/',
     license='BSD license',
     author='Brian M. Clapper',
     author_email='bmc@clapper.org',
