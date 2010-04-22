@@ -28,14 +28,11 @@ must build *pyutmp* from source code, as described below.
 
 First, obtain the source code. You can download the source (as a zip or
 tarball) from <http://github.com/bmc/pyutmp/downloads>, or you can make a
-local read-only clone of the [Git repository][] using one of the following
-commands:
+local read-only clone of the [GitHub repository][] using one of the
+following commands:
 
     $ git clone git://github.com/bmc/pyutmp.git
     $ git clone http://github.com/bmc/pyutmp.git
-
-[Git repository]: http://github.com/bmc/pyutmp
-[Cython]: http://www.cython.org/
 
 Once you have a local `pyutmp` source directory, change your working directory
 to the source directory, and type:
@@ -126,9 +123,26 @@ Adding support for other Unix variants should be straightforward.
 - Access to the *utmp* file is read-only. There is no provision for writing
   to the file.
 
-## License
+## Author
 
-This module is released under a BSD license. See the accompanying
-[license][] file.
+[Brian M. Clapper][].
 
-[license]: license.html
+## Copyright and License
+
+This module is copyright &copy; 2008-2010 [Brian M. Clapper][] and is
+released under a [BSD license][].
+
+## Patches
+
+I gladly accept patches from their original authors. Feel free to email
+patches to me or to fork the [GitHub repository][] and send me a pull
+request. Along with any patch you send:
+
+* Please state that the patch is your original work.
+* Please indicate that you license the work to the *pyutmp* project
+  under a [BSD License][].
+
+[BSD license]: license.html
+[Brian M. Clapper]: mailto:bmc@clapper.org
+[GitHub repository]: http://github.com/bmc/pyutmp
+[Cython]: http://www.cython.org/
