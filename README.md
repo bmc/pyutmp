@@ -8,6 +8,5 @@ To install it somewhere else (e.g., your home directory) type:
 
     python setup.py install --prefix=$HOME
 
-*pyutmp* is released under a [new BSD license][].
-
-[new BSD license]: http://github.com/bmc/pyutmp/LICENSE.md
+*pyutmp* is released under a new BSD license. See the accompanying license
+file for details.
