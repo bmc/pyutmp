@@ -102,7 +102,7 @@ setup(
     version='0.2.2',
     description=DESCRIPTION,
     long_description=long_description,
-    url='http://bmc.github.com/pyutmp/',
+    url='http://software.clapper.org/pyutmp/',
     license='BSD license',
     author='Brian M. Clapper',
     author_email='bmc@clapper.org',

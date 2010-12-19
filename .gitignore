@@ -3,3 +3,8 @@
 *.pyc
 *.so
 *.o
+build
+dist
+paragrep.egg-info
+*.egg
+MANIFEST
